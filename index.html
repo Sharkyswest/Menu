@@ -20,7 +20,7 @@
             transition: all 0.2s ease-in-out;
         }
         .menu-btn:hover {
-            background-color: #1c3c9c;
+            transform: translateY(-2px);
         }
         .btn-active {
             background-color: white; 
@@ -122,9 +122,7 @@
             // Current page index for multi-page menus
             let currentMenuIndex = 0;
             
-            // IMPORTANT: Replace these placeholder URLs with the actual paths to your PNG files.
-            // Example for main menu: 'main': ['main_menu_page_1.png', 'main_menu_page_2.png', ...]
-            // Example for single page menu: 'happy-hour': 'happy_hour.png'
+            // IMPORTANT: The URLs below have been corrected to match the file names you uploaded.
             const menuUrls = {
                 'main': [
                     'main_menu1.png',
@@ -133,17 +131,12 @@
                     'main_menu4.png',
                     'main_menu5.png',
                     'main_menu6.png',
-                    'main_menu7.png',
-                    'main_menu8.png'
                 ],
                 'daily-specials': 'daily_special.png',
                 'special': 'special.png',
                 'late-night': 'latenight_menu.png',
                 'desert': 'desert.png',
-                'tap-bar': [
-                    'tap_bar1.png',
-                    'tap_bar2.png'
-                ],
+                'tap-bar': 'tap_beer.png',
                 'football-special': 'football_special.png'
             };
 
