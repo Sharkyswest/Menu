@@ -31,14 +31,14 @@
         }
         /* Custom styles for navigation buttons */
         .nav-btn {
-            background-color: rgba(10, 35, 65, 0.3); /* Dark navy blue with 70% transparency */
+            background-color: rgba(10, 35, 65, 0.2); /* Dark navy blue with 80% transparency */
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
         }
         .nav-btn:hover {
-            background-color: rgba(10, 35, 65, 1);
+            background-color: rgba(10, 35, 65, 0.4); /* 60% transparency on hover */
         }
         .nav-btn svg {
             color: white;
@@ -76,12 +76,12 @@
                 <img id="menu-display-image" src="" alt="Restaurant Menu" class="w-full h-auto object-contain" onerror="handleImageError(this)">
                 
                 <!-- Navigation Buttons for multi-page menus -->
-                <button id="prev-btn" class="nav-btn absolute left-[-1rem] top-1/2 -translate-y-1/2 h-16 w-12 rounded-r-full">
+                <button id="prev-btn" class="nav-btn absolute left-[-0.5rem] top-1/2 -translate-y-1/2 h-11 w-8 rounded-r-full">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                 </button>
-                <button id="next-btn" class="nav-btn absolute right-[-1rem] top-1/2 -translate-y-1/2 h-16 w-12 rounded-l-full">
+                <button id="next-btn" class="nav-btn absolute right-[-0.5rem] top-1/2 -translate-y-1/2 h-11 w-8 rounded-l-full">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
