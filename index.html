@@ -23,14 +23,13 @@
             background-color: #1c3c9c;
         }
         .btn-active {
-            background-color: white; /* white background */
-            border: 2px solid #1e40af; /* blue border */
+            background-color: #e5e5d3;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            color: #1e40af; /* blue font */
+            color: #1e40af;
         }
         /* Custom styles for navigation buttons */
         .nav-btn {
-            background-color: rgba(30, 64, 175, 0.65); /* 15% more transparent */
+            background-color: rgba(30, 64, 175, 0.8); /* A shade of blue similar to the logo */
             border-radius: 9999px;
             width: 40px;
             height: 40px;
@@ -73,30 +72,33 @@
                 <button id="tap-bar" class="menu-btn py-2 px-4 md:py-3 md:px-6 rounded-full text-sm font-medium transition-colors duration-200">Tap Beer</button>
                 <button id="football-special" class="menu-btn py-2 px-4 md:py-3 md:px-6 rounded-full text-sm font-medium transition-colors duration-200">Football Thursday Specials</button>
             </nav>
-
-            <!-- Menu Image Display Area -->
-            <div id="menu-image-container" class="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-xl">
-                <img id="menu-display-image" src="" alt="Restaurant Menu" class="w-full h-auto object-contain" onerror="handleImageError(this)">
-                
-                <!-- Navigation Buttons for multi-page menus -->
-                <button id="prev-btn" class="nav-btn absolute left-0 top-1/2 -translate-y-1/2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                <button id="next-btn" class="nav-btn absolute right-0 top-1/2 -translate-y-1/2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-            </div>
         </div>
     </main>
-
+    
+    <!-- New full-width container for the image and navigation buttons -->
+    <div class="relative w-full overflow-hidden">
+        <!-- Menu Image Display Area -->
+        <div id="menu-image-container" class="w-full max-w-4xl mx-auto rounded-lg shadow-xl">
+            <img id="menu-display-image" src="" alt="Restaurant Menu" class="w-full h-auto object-contain" onerror="handleImageError(this)">
+        </div>
+        
+        <!-- Navigation Buttons for multi-page menus -->
+        <button id="prev-btn" class="nav-btn absolute left-0 top-1/2 -translate-y-1/2 z-10 mx-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        <button id="next-btn" class="nav-btn absolute right-0 top-1/2 -translate-y-1/2 z-10 mx-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
+    
     <footer class="bg-gray-800 text-white text-center py-4 mt-8">
         <p>&copy; 2024 Sharkys West. All rights reserved.</p>
     </footer>
-
+    
     <!-- Error Modal -->
     <div id="error-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center">
         <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
@@ -105,8 +107,8 @@
             <p class="mt-4 text-xs text-gray-500">Possible reasons: incorrect filename, file not in the same folder, or a typo.</p>
             <button id="close-modal-btn" class="mt-4 px-4 py-2 bg-gray-200 rounded-full hover:bg-gray-300 text-sm font-medium">Close</button>
         </div>
-    </div>
-
+      </div>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const menuButtons = document.querySelectorAll('.menu-btn');
@@ -145,21 +147,21 @@
                 ],
                 'football-special': 'football_special.png'
             };
-
+    
             function updateMenuImage(menuId, index = 0) {
                 const isMultiPage = Array.isArray(menuUrls[menuId]);
                 const imageUrl = isMultiPage ? menuUrls[menuId][index] : menuUrls[menuId];
                 
                 // Fade out the current image
                 menuImage.classList.add('image-fade-out');
-
+    
                 // Wait for the animation to complete before changing the image source
                 setTimeout(() => {
                     console.log(`Attempting to load image from URL: ${imageUrl}`);
                     menuImage.src = imageUrl;
                     menuImage.classList.remove('image-fade-out');
                 }, 300); // This timeout matches the transition duration
-
+    
                 if (isMultiPage) {
                     prevBtn.classList.remove('hidden');
                     nextBtn.classList.remove('hidden');
@@ -173,7 +175,7 @@
                     nextBtn.classList.add('hidden');
                 }
             }
-
+    
             // Function to handle image loading errors
             window.handleImageError = (image) => {
                 errorMessage.textContent = `The image could not be loaded. Please check the file path: ${image.src}`;
@@ -184,7 +186,7 @@
             closeModalBtn.addEventListener('click', () => {
                 errorModal.classList.add('hidden');
             });
-
+    
             // Set initial active state and display the main menu
             function showInitialMenu() {
                 const initialMenuId = 'main';
@@ -194,7 +196,7 @@
                 }
                 updateMenuImage(initialMenuId);
             }
-
+    
             menuButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const menuId = button.id;
@@ -212,7 +214,7 @@
                     updateMenuImage(menuId);
                 });
             });
-
+    
             // Navigation button event listeners
             prevBtn.addEventListener('click', () => {
                 const activeBtnId = document.querySelector('.menu-btn.btn-active').id;
@@ -222,7 +224,7 @@
                     updateMenuImage(activeBtnId, currentMenuIndex);
                 }
             });
-
+    
             nextBtn.addEventListener('click', () => {
                 const activeBtnId = document.querySelector('.menu-btn.btn-active').id;
                 const menuPages = menuUrls[activeBtnId];
@@ -231,7 +233,7 @@
                     updateMenuImage(activeBtnId, currentMenuIndex);
                 }
             });
-
+    
             showInitialMenu();
         });
     </script>
