@@ -10,8 +10,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f7f7f2; /* Light background */
-            color: #333; /* Dark text for contrast */
+            background-color: #f7f7f2;
+            color: #333;
         }
         /* Custom styles for menu buttons */
         .menu-btn {
@@ -29,24 +29,22 @@
         }
         /* Custom styles for navigation buttons */
         .nav-btn {
-            background-color: transparent;
+            background-color: rgba(30, 64, 175, 0.8); /* A shade of blue similar to the logo */
+            border-radius: 9999px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
             transition: all 0.2s;
-            cursor: pointer;
+        }
+        .nav-btn:hover {
+            background-color: rgba(30, 64, 175, 1);
+            transform: scale(1.05);
         }
         .nav-btn svg {
-            color: white; /* White arrow for contrast on blue background */
+            color: white;
             stroke-width: 3;
-        }
-        .nav-bg {
-            background-color: rgba(30, 64, 175, 0.15); /* Blue with 15% transparency */
-        }
-        .nav-bg:hover {
-            background-color: rgba(30, 64, 175, 0.25);
         }
         /* Custom styles for the error modal */
         #error-modal {
@@ -74,35 +72,25 @@
                 <button id="tap-bar" class="menu-btn py-2 px-4 md:py-3 md:px-6 rounded-full text-sm font-medium transition-colors duration-200">Tap Beer</button>
                 <button id="football-special" class="menu-btn py-2 px-4 md:py-3 md:px-6 rounded-full text-sm font-medium transition-colors duration-200">Football Thursday Specials</button>
             </nav>
+
+            <!-- Menu Image Display Area -->
+            <div id="menu-image-container" class="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-xl">
+                <img id="menu-display-image" src="" alt="Restaurant Menu" class="w-full h-auto object-contain" onerror="handleImageError(this)">
+                
+                <!-- Navigation Buttons for multi-page menus -->
+                <button id="prev-btn" class="nav-btn absolute left-4 top-1/2 -translate-y-1/2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button id="next-btn" class="nav-btn absolute right-4 top-1/2 -translate-y-1/2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
         </div>
     </main>
-
-    <!-- New full-width container for the image and navigation buttons -->
-    <div class="relative w-full overflow-hidden">
-        <!-- Blue half-circle background for left arrow -->
-        <div class="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-24 nav-bg rounded-r-full flex items-center justify-start pl-2 transition-colors duration-200">
-            <!-- Navigation Buttons for multi-page menus -->
-            <button id="prev-btn" class="nav-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-        </div>
-        
-        <!-- Blue half-circle background for right arrow -->
-        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-12 h-24 nav-bg rounded-l-full flex items-center justify-end pr-2 transition-colors duration-200">
-            <button id="next-btn" class="nav-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-        </div>
-
-        <!-- Menu Image Display Area -->
-        <div id="menu-image-container" class="w-full max-w-4xl mx-auto rounded-lg shadow-xl">
-            <img id="menu-display-image" src="" alt="Restaurant Menu" class="w-full h-auto object-contain" onerror="handleImageError(this)">
-        </div>
-    </div>
 
     <footer class="bg-gray-800 text-white text-center py-4 mt-8">
         <p>&copy; 2024 Sharkys West. All rights reserved.</p>
@@ -137,22 +125,24 @@
             // Example for single page menu: 'happy-hour': 'happy_hour.png'
             const menuUrls = {
                 'main': [
-                    'main_menu1.jpg',
-                    'main_menu2.jpg',
-                    'main_menu3.jpg',
-                    'main_menu4.jpg',
-                    'main_menu5.jpg',
-                    'main_menu6.jpg'
+                    'main_menu1.png',
+                    'main_menu2.png',
+                    'main_menu3.png',
+                    'main_menu4.png',
+                    'main_menu5.png',
+                    'main_menu6.png',
+                    'main_menu7.png',
+                    'main_menu8.png'
                 ],
-                'daily-specials': 'daily_special.jpg',
+                'daily-specials': 'daily_special.png',
                 'special': 'special.png',
-                'late-night': 'latenight_menu.jpg',
-                'desert': 'desert.jpg',
+                'late-night': 'latenight_menu.png',
+                'desert': 'desert.png',
                 'tap-bar': [
                     'tap_bar1.png',
                     'tap_bar2.png'
                 ],
-                'football-special': 'football_special.jpg'
+                'football-special': 'football_special.png'
             };
 
             function updateMenuImage(menuId, index = 0) {
@@ -170,16 +160,16 @@
                 }, 300); // This timeout matches the transition duration
 
                 if (isMultiPage) {
-                    prevBtn.closest('.nav-bg').classList.remove('hidden');
-                    nextBtn.closest('.nav-bg').classList.remove('hidden');
+                    prevBtn.classList.remove('hidden');
+                    nextBtn.classList.remove('hidden');
                     // Hide/show buttons based on the current page
-                    prevBtn.closest('.nav-bg').style.opacity = index > 0 ? '1' : '0.5';
+                    prevBtn.style.opacity = index > 0 ? '1' : '0.5';
                     prevBtn.style.pointerEvents = index > 0 ? 'auto' : 'none';
-                    nextBtn.closest('.nav-bg').style.opacity = index < menuUrls[menuId].length - 1 ? '1' : '0.5';
+                    nextBtn.style.opacity = index < menuUrls[menuId].length - 1 ? '1' : '0.5';
                     nextBtn.style.pointerEvents = index < menuUrls[menuId].length - 1 ? 'auto' : 'none';
                 } else {
-                    prevBtn.closest('.nav-bg').classList.add('hidden');
-                    nextBtn.closest('.nav-bg').classList.add('hidden');
+                    prevBtn.classList.add('hidden');
+                    nextBtn.classList.add('hidden');
                 }
             }
 
