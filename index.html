@@ -73,7 +73,8 @@
 
             <!-- Menu Image Display Area -->
             <div id="menu-image-container" class="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-xl">
-                <img id="menu-display-image" src="" alt="Restaurant Menu" class="w-full h-auto object-contain" onerror="handleImageError(this)">
+                <!-- Added a default src to prevent empty requests on some browsers -->
+                <img id="menu-display-image" src="main_menu1.png" alt="Restaurant Menu" class="w-full h-auto object-contain" onerror="handleImageError(this)">
                 
                 <!-- Navigation Buttons for multi-page menus -->
                 <button id="prev-btn" class="nav-btn absolute left-[-0.5rem] top-1/2 -translate-y-1/2 h-10 w-7 rounded-r-full">
@@ -127,6 +128,8 @@
                     'main_menu4.png',
                     'main_menu5.png',
                     'main_menu6.png',
+                    'main_menu7.png',
+                    'main_menu8.png'
                 ],
                 'daily-specials': 'daily_special.png',
                 'special': 'special.png',
