@@ -23,11 +23,11 @@
             transform: translateY(-2px);
         }
         .btn-active {
-            background-color: white; 
+            background-color: white;
             color: #0A2341;
             border: 2px solid #0A2341;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); 
-            transform: translateY(-3px); 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
         }
         /* Custom styles for navigation buttons */
         .nav-btn {
@@ -58,32 +58,34 @@
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
-    <main class="flex-grow container mx-auto px-4 py-8 md:py-12">
-        <div class="bg-white rounded-xl shadow-lg p-4 md:p-8">
-            <!-- Menu Navigation Buttons -->
-            <nav class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
-                <button id="main" class="menu-btn py-2 px-4 md:py-3 md:px-6 rounded-full text-sm font-medium transition-colors duration-200">Main Menu</button>
-                <button id="daily-specials" class="menu-btn py-2 px-4 md:py-3 md:px-6 rounded-full text-sm font-medium transition-colors duration-200">Daily Specials</button>
-                <button id="special" class="menu-btn py-2 px-4 md:py-3 md:px-6 rounded-full text-sm font-medium transition-colors duration-200">Special</button>
-                <button id="late-night" class="menu-btn py-2 px-4 md:py-3 md:px-6 rounded-full text-sm font-medium transition-colors duration-200">Late Night</button>
-                <button id="desert" class="menu-btn py-2 px-4 md:py-3 md:px-6 rounded-full text-sm font-medium transition-colors duration-200">Dessert</button>
-                <button id="tap-bar" class="menu-btn py-2 px-4 md:py-3 md:px-6 rounded-full text-sm font-medium transition-colors duration-200">Tap Beer</button>
-                <button id="football-special" class="menu-btn py-2 px-4 md:py-3 md:px-6 rounded-full text-sm font-medium transition-colors duration-200">Football Thursday Specials</button>
+    <!-- Adjusted container for better mobile spacing -->
+    <main class="flex-grow container mx-auto px-2 py-4 md:px-4 md:py-8">
+        <!-- Removed extra padding and made it more mobile-friendly -->
+        <div class="bg-white rounded-xl shadow-lg p-2 md:p-4">
+            <!-- Menu Navigation Buttons - now with smaller padding -->
+            <nav class="flex flex-wrap justify-center gap-1 sm:gap-2 mb-4">
+                <button id="main" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Main Menu</button>
+                <button id="desert" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Dessert</button>
+                <button id="special" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Special</button>
+                <button id="late-night" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Late Night</button>
+                <button id="tap-bar" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Tap Beer</button>
+                <button id="daily-specials" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Daily Specials</button>
+                <button id="football-special" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Football Thursday Specials</button>
             </nav>
 
             <!-- Menu Image Display Area -->
             <div id="menu-image-container" class="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-xl">
                 <!-- Added a default src to prevent empty requests on some browsers -->
                 <img id="menu-display-image" src="main_menu1.png" alt="Restaurant Menu" class="w-full h-auto object-contain" onerror="handleImageError(this)">
-                
+
                 <!-- Navigation Buttons for multi-page menus -->
-                <button id="prev-btn" class="nav-btn absolute left-[-0.5rem] top-1/2 -translate-y-1/2 h-10 w-7 rounded-r-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <button id="prev-btn" class="nav-btn absolute left-[-0.5rem] top-1/2 -translate-y-1/2 h-8 w-6 md:h-10 md:w-7 rounded-r-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                 </button>
-                <button id="next-btn" class="nav-btn absolute right-[-0.5rem] top-1/2 -translate-y-1/2 h-10 w-7 rounded-l-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <button id="next-btn" class="nav-btn absolute right-[-0.5rem] top-1/2 -translate-y-1/2 h-8 w-6 md:h-10 md:w-7 rounded-l-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
@@ -107,18 +109,20 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('Script loaded successfully.'); // New console log
             const menuButtons = document.querySelectorAll('.menu-btn');
             const menuImage = document.getElementById('menu-display-image');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
-            
+            const menuImageContainer = document.getElementById('menu-image-container');
+
             const errorModal = document.getElementById('error-modal');
             const errorMessage = document.getElementById('error-message');
             const closeModalBtn = document.getElementById('close-modal-btn');
-            
+
             // Current page index for multi-page menus
             let currentMenuIndex = 0;
-            
+
             // IMPORTANT: The URLs below have been corrected to match the file names you uploaded.
             const menuUrls = {
                 'main': [
@@ -136,16 +140,17 @@
                 'late-night': 'latenight_menu.png',
                 'desert': 'desert.png',
                 'tap-bar': [
-			'tap_bar1.png',
-			'tap_bar2.png'
-		],
+                    'tap_bar1.png',
+                    'tap_bar2.png'
+                ],
                 'football-special': 'football_special.png'
             };
 
             function updateMenuImage(menuId, index = 0) {
+                console.log(`Attempting to switch to menu ID: ${menuId}`); // New console log
                 const isMultiPage = Array.isArray(menuUrls[menuId]);
                 const imageUrl = isMultiPage ? menuUrls[menuId][index] : menuUrls[menuId];
-                
+
                 // Fade out the current image
                 menuImage.classList.add('image-fade-out');
 
@@ -175,8 +180,9 @@
                 errorMessage.textContent = `The image could not be loaded. Please check the file path: ${image.src}`;
                 errorModal.classList.remove('hidden');
                 menuImage.alt = "Image not found";
+                console.error(`Error loading image from path: ${image.src}`); // New console log
             };
-            
+
             closeModalBtn.addEventListener('click', () => {
                 errorModal.classList.add('hidden');
             });
@@ -194,16 +200,16 @@
             menuButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const menuId = button.id;
-                    
+
                     // Reset page index for new menu
                     currentMenuIndex = 0;
-                    
+
                     // Remove active class from all buttons
                     menuButtons.forEach(btn => btn.classList.remove('btn-active'));
-                    
+
                     // Add active class to the clicked button
                     button.classList.add('btn-active');
-                    
+
                     // Update image and navigation
                     updateMenuImage(menuId);
                 });
@@ -225,6 +231,33 @@
                 if (currentMenuIndex < menuPages.length - 1) {
                     currentMenuIndex++;
                     updateMenuImage(activeBtnId, currentMenuIndex);
+                }
+            });
+
+            // Swipe functionality for touch devices
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const swipeThreshold = 50; // Minimum distance for a swipe
+
+            menuImageContainer.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            menuImageContainer.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                const swipeDistance = touchEndX - touchStartX;
+
+                const activeBtnId = document.querySelector('.menu-btn.btn-active').id;
+                const isMultiPage = Array.isArray(menuUrls[activeBtnId]);
+
+                if (isMultiPage) {
+                    if (swipeDistance > swipeThreshold) {
+                        // Swipe right
+                        prevBtn.click();
+                    } else if (swipeDistance < -swipeThreshold) {
+                        // Swipe left
+                        nextBtn.click();
+                    }
                 }
             });
 
