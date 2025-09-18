@@ -29,40 +29,21 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
             transform: translateY(-3px);
         }
-        /* Custom styles for navigation buttons */
-        .nav-btn {
-            background-color: rgba(10, 35, 65, 0.12); /* Dark navy blue with 88% transparency */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-        .nav-btn:hover {
-            background-color: rgba(10, 35, 65, 0.4); /* 60% transparency on hover */
-        }
-        .nav-btn svg {
-            color: white;
-            stroke-width: 3;
-        }
         /* Custom styles for the error modal */
         #error-modal {
             background-color: rgba(0, 0, 0, 0.5);
         }
-        /* Smooth fade-in and fade-out transition for the image */
-        #menu-display-image {
+        /* Style for the container of menu images */
+        #menu-display-container img {
             transition: opacity 0.3s ease-in-out;
-        }
-        .image-fade-out {
-            opacity: 0;
         }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
-    <!-- Adjusted container for better mobile spacing -->
+    <!-- Main content container -->
     <main class="flex-grow container mx-auto px-2 py-4 md:px-4 md:py-8">
-        <!-- Removed extra padding and made it more mobile-friendly -->
         <div class="bg-white rounded-xl shadow-lg p-2 md:p-4">
-            <!-- Menu Navigation Buttons - now with smaller padding -->
+            <!-- Menu Navigation Buttons -->
             <nav class="flex flex-wrap justify-center gap-1 sm:gap-2 mb-4">
                 <button id="main" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Main Menu</button>
                 <button id="desert" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Dessert</button>
@@ -74,21 +55,11 @@
             </nav>
 
             <!-- Menu Image Display Area -->
-            <div id="menu-image-container" class="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-xl">
-                <!-- Added a default src to prevent empty requests on some browsers -->
-                <img id="menu-display-image" src="main_menu1.png" alt="Restaurant Menu" class="w-full h-auto object-contain">
-
-                <!-- Navigation Buttons for multi-page menus -->
-                <button id="prev-btn" class="nav-btn absolute left-[-0.5rem] top-1/2 -translate-y-1/2 h-8 w-6 md:h-10 md:w-7 rounded-r-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                <button id="next-btn" class="nav-btn absolute right-[-0.5rem] top-1/2 -translate-y-1/2 h-8 w-6 md:h-10 md:w-7 rounded-l-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
+            <!-- This container will now hold all images for a selected menu, stacked vertically -->
+            <div id="menu-image-container" class="relative w-full max-w-4xl mx-auto">
+                <div id="menu-display-container" class="flex flex-col gap-4">
+                    <!-- Menu images will be dynamically added here by JavaScript -->
+                </div>
             </div>
         </div>
     </main>
@@ -109,123 +80,108 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('Script loaded successfully.'); // New console log
             const menuButtons = document.querySelectorAll('.menu-btn');
-            const menuImage = document.getElementById('menu-display-image');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const menuImageContainer = document.getElementById('menu-image-container');
-
+            const menuImageContainer = document.getElementById('menu-image-container'); // Get the container for swipe events
+            const menuDisplayContainer = document.getElementById('menu-display-container');
             const errorModal = document.getElementById('error-modal');
             const errorMessage = document.getElementById('error-message');
             const closeModalBtn = document.getElementById('close-modal-btn');
 
-            // Current page index for multi-page menus
-            let currentMenuIndex = 0;
-
-            // IMPORTANT: The URLs below have been corrected to match the file names you uploaded.
+            // The URLs for all menu pages.
             const menuUrls = {
                 'main': [
-                    'main_menu1.png',
-                    'main_menu2.png',
-                    'main_menu3.png',
-                    'main_menu4.png',
-                    'main_menu5.png',
-                    'main_menu6.png',
-                    'main_menu7.png',
-                    'main_menu8.png'
+                    'main_menu1.png', 'main_menu2.png', 'main_menu3.png', 'main_menu4.png',
+                    'main_menu5.png', 'main_menu6.png', 'main_menu7.png', 'main_menu8.png'
                 ],
                 'daily-specials': ['daily_special.png'],
                 'special': ['special.png'],
                 'late-night': ['latenight_menu.png'],
                 'desert': ['desert.png'],
-                'tap-bar': [
-                    'tap_bar1.png',
-                    'tap_bar2.png'
-                ],
+                'tap-bar': ['tap_bar1.png', 'tap_bar2.png'],
                 'football-special': ['football_special.png']
             };
             
+            // --- Functions ---
+            
+            // Function to display the error modal if an image fails to load.
             function handleImageError(image) {
                 errorMessage.textContent = `The image could not be loaded. Please check the file path: ${image.src}`;
                 errorModal.classList.remove('hidden');
-                menuImage.alt = "Image not found";
                 console.error(`Error loading image from path: ${image.src}`);
             }
-            
-            menuImage.addEventListener('error', () => handleImageError(menuImage));
 
-            function updateMenuImage(menuId, index = 0) {
-                const isMultiPage = Array.isArray(menuUrls[menuId]) && menuUrls[menuId].length > 1;
-                const imageUrl = menuUrls[menuId][index];
-                
-                // Fade out the current image
-                menuImage.classList.add('image-fade-out');
+            // This function now clears the container and adds all images for the selected menu.
+            function displayVerticalMenu(menuId) {
+                // Clear any existing menu images
+                menuDisplayContainer.innerHTML = '';
 
-                // Wait for the animation to complete before changing the image source
-                setTimeout(() => {
-                    menuImage.src = imageUrl;
-                    menuImage.classList.remove('image-fade-out');
-                }, 300); // This timeout matches the transition duration
+                const imageUrls = menuUrls[menuId] || [];
 
-                // Update visibility and pointer-events for nav buttons
-                if (isMultiPage) {
-                    prevBtn.classList.remove('hidden');
-                    nextBtn.classList.remove('hidden');
-                    // Hide/show buttons based on the current page
-                    prevBtn.style.opacity = index > 0 ? '1' : '0';
-                    prevBtn.style.pointerEvents = index > 0 ? 'auto' : 'none';
-                    nextBtn.style.opacity = index < menuUrls[menuId].length - 1 ? '1' : '0';
-                    nextBtn.style.pointerEvents = index < menuUrls[menuId].length - 1 ? 'auto' : 'none';
-                } else {
-                    prevBtn.classList.add('hidden');
-                    nextBtn.classList.add('hidden');
-                }
+                // Create and append an image element for each URL
+                imageUrls.forEach(url => {
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.alt = `Restaurant Menu - ${menuId}`;
+                    img.className = "w-full h-auto object-contain rounded-lg shadow-md";
+                    
+                    // Attach an error handler to each individual image
+                    img.addEventListener('error', () => handleImageError(img));
+                    
+                    menuDisplayContainer.appendChild(img);
+                });
             }
 
-            closeModalBtn.addEventListener('click', () => {
-                errorModal.classList.add('hidden');
-            });
-
+            // Function to set the initial state when the page loads.
             function showInitialMenu() {
                 const initialMenuId = 'main';
                 const initialBtn = document.getElementById(initialMenuId);
                 if (initialBtn) {
                     initialBtn.classList.add('btn-active');
                 }
-                updateMenuImage(initialMenuId);
+                displayVerticalMenu(initialMenuId);
             }
 
+            // --- Event Listeners ---
+
+            // Close button for the error modal.
+            closeModalBtn.addEventListener('click', () => {
+                errorModal.classList.add('hidden');
+            });
+
+            // Add click listeners to all menu navigation buttons.
             menuButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const menuId = button.id;
-                    currentMenuIndex = 0;
+                    // Update active button style
                     menuButtons.forEach(btn => btn.classList.remove('btn-active'));
                     button.classList.add('btn-active');
-                    updateMenuImage(menuId);
+                    // Display the selected menu
+                    displayVerticalMenu(menuId);
                 });
             });
-
-            prevBtn.addEventListener('click', () => {
-                const activeBtnId = document.querySelector('.menu-btn.btn-active').id;
-                if (currentMenuIndex > 0) {
-                    currentMenuIndex--;
-                    updateMenuImage(activeBtnId, currentMenuIndex);
-                }
-            });
-
-            nextBtn.addEventListener('click', () => {
-                const activeBtnId = document.querySelector('.menu-btn.btn-active').id;
-                const menuPages = menuUrls[activeBtnId];
-                if (currentMenuIndex < menuPages.length - 1) {
-                    currentMenuIndex++;
-                    updateMenuImage(activeBtnId, currentMenuIndex);
-                }
-            });
+            
+            // --- Swipe Navigation Logic ---
 
             let touchStartX = 0;
             let touchEndX = 0;
-            const swipeThreshold = 50;
+            const swipeThreshold = 50; // Minimum distance for a swipe
+
+            function handleSwipe() {
+                const swipeDistance = touchEndX - touchStartX;
+                const buttonArray = Array.from(menuButtons);
+                const activeButton = document.querySelector('.menu-btn.btn-active');
+                const currentIndex = buttonArray.indexOf(activeButton);
+
+                if (swipeDistance < -swipeThreshold) { // Swipe Left (Next)
+                    if (currentIndex < buttonArray.length - 1) {
+                        buttonArray[currentIndex + 1].click();
+                    }
+                } else if (swipeDistance > swipeThreshold) { // Swipe Right (Previous)
+                    if (currentIndex > 0) {
+                        buttonArray[currentIndex - 1].click();
+                    }
+                }
+            }
 
             menuImageContainer.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
@@ -233,21 +189,16 @@
 
             menuImageContainer.addEventListener('touchend', (e) => {
                 touchEndX = e.changedTouches[0].screenX;
-                const swipeDistance = touchEndX - touchStartX;
-                const activeBtnId = document.querySelector('.menu-btn.btn-active').id;
-                const isMultiPage = Array.isArray(menuUrls[activeBtnId]) && menuUrls[activeBtnId].length > 1;
+                handleSwipe();
+            }, { passive: true });
 
-                if (isMultiPage) {
-                    if (swipeDistance > swipeThreshold && currentMenuIndex > 0) {
-                        prevBtn.click();
-                    } else if (swipeDistance < -swipeThreshold && currentMenuIndex < menuUrls[activeBtnId].length - 1) {
-                        nextBtn.click();
-                    }
-                }
-            });
 
+            // --- Initial Load ---
+
+            // Display the main menu when the page first loads.
             showInitialMenu();
         });
     </script>
 </body>
 </html>
+
