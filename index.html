@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sharkys West Menu</title>
-    <!-- Load Tailwind CSS from CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
@@ -40,10 +39,8 @@
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
-    <!-- Main content container -->
     <main class="flex-grow container mx-auto px-2 py-4 md:px-4 md:py-8">
         <div class="bg-white rounded-xl shadow-lg p-2 md:p-4">
-            <!-- Menu Navigation Buttons -->
             <nav class="flex flex-wrap justify-center gap-1 sm:gap-2 mb-4">
                 <button id="main" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Main Menu</button>
                 <button id="desert" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Dessert</button>
@@ -56,12 +53,9 @@
                 <button id="football-special" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Football Specials</button>
             </nav>
 
-            <!-- Menu Image Display Area -->
-            <!-- This container will now hold all images for a selected menu, stacked vertically -->
             <div id="menu-image-container" class="relative w-full max-w-4xl mx-auto">
                 <div id="menu-display-container" class="flex flex-col gap-4">
-                    <!-- Menu images will be dynamically added here by JavaScript -->
-                </div>
+                    </div>
             </div>
         </div>
     </main>
@@ -70,7 +64,6 @@
         <p>&copy; 2024 Sharkys West. All rights reserved.</p>
     </footer>
 
-    <!-- Error Modal -->
     <div id="error-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center">
         <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
             <h3 class="text-lg font-bold mb-2 text-red-600">Image Loading Error</h3>
@@ -83,7 +76,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const menuButtons = document.querySelectorAll('.menu-btn');
-            const menuImageContainer = document.getElementById('menu-image-container'); // Get the container for swipe events
+            const menuImageContainer = document.getElementById('menu-image-container'); // Get the container for potential interaction
             const menuDisplayContainer = document.getElementById('menu-display-container');
             const errorModal = document.getElementById('error-modal');
             const errorMessage = document.getElementById('error-message');
@@ -164,37 +157,11 @@
                 });
             });
             
-            // --- Swipe Navigation Logic ---
-
-            let touchStartX = 0;
-            let touchEndX = 0;
-            const swipeThreshold = 50; // Minimum distance for a swipe
-
-            function handleSwipe() {
-                const swipeDistance = touchEndX - touchStartX;
-                const buttonArray = Array.from(menuButtons);
-                const activeButton = document.querySelector('.menu-btn.btn-active');
-                const currentIndex = buttonArray.indexOf(activeButton);
-
-                if (swipeDistance < -swipeThreshold) { // Swipe Left (Next)
-                    if (currentIndex < buttonArray.length - 1) {
-                        buttonArray[currentIndex + 1].click();
-                    }
-                } else if (swipeDistance > swipeThreshold) { // Swipe Right (Previous)
-                    if (currentIndex > 0) {
-                        buttonArray[currentIndex - 1].click();
-                    }
-                }
-            }
-
-            menuImageContainer.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, { passive: true });
-
-            menuImageContainer.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            }, { passive: true });
+            // --- Swipe Navigation Logic (Disabled for Zoom/Pan Fix) ---
+            // The horizontal swipe logic has been disabled to prevent accidental menu
+            // switching when a user is zoomed in and panning to read a menu image.
+            // Navigation should now only be done using the dedicated menu buttons.
+            console.log("Horizontal swipe navigation disabled to prevent conflict with image zoom/pan.");
 
 
             // --- Initial Load ---
@@ -205,4 +172,3 @@
     </script>
 </body>
 </html>
-
