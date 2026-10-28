@@ -43,6 +43,7 @@
         <div class="bg-white rounded-xl shadow-lg p-2 md:p-4">
             <nav class="flex flex-wrap justify-center gap-1 sm:gap-2 mb-4">
                 <button id="main" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Main Menu</button>
+                <button id="cocktails" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Cocktails</button>
                 <button id="desert" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Dessert</button>
                 <button id="special" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Special</button>
                 <button id="late-night" class="menu-btn py-1 px-3 md:py-2 md:px-4 rounded-full text-xs md:text-sm font-medium transition-colors duration-200">Late Night</button>
@@ -88,6 +89,7 @@
                     'main_menu1.png', 'main_menu2.png', 'main_menu3.png', 'main_menu4.png',
                     'main_menu5.png', 'main_menu6.png', 'main_menu7.png', 'main_menu8.png'
                 ],
+                'cocktails': ['Cocotail.jpeg'],
                 'desert': ['desert.png'],
                 'special': ['special.png'],
                 'late-night': ['latenight_menu.png'],
@@ -141,7 +143,7 @@
             // --- Event Listeners ---
 
             // Close button for the error modal.
-            closeModalBtn.addEventListener('click', () => {
+            closeModalBtn.addEventlistener('click', () => {
                 errorModal.classList.add('hidden');
             });
 
