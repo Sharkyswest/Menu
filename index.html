@@ -77,7 +77,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const menuButtons = document.querySelectorAll('.menu-btn');
-            const menuImageContainer = document.getElementById('menu-image-container'); // Get the container for potential interaction
+            const menuImageContainer = document.getElementById('menu-image-container');
             const menuDisplayContainer = document.getElementById('menu-display-container');
             const errorModal = document.getElementById('error-modal');
             const errorMessage = document.getElementById('error-message');
@@ -102,35 +102,26 @@
             
             // --- Functions ---
             
-            // Function to display the error modal if an image fails to load.
             function handleImageError(image) {
                 errorMessage.textContent = `The image could not be loaded. Please check the file path: ${image.src}`;
                 errorModal.classList.remove('hidden');
                 console.error(`Error loading image from path: ${image.src}`);
             }
 
-            // This function now clears the container and adds all images for the selected menu.
             function displayVerticalMenu(menuId) {
-                // Clear any existing menu images
                 menuDisplayContainer.innerHTML = '';
-
                 const imageUrls = menuUrls[menuId] || [];
 
-                // Create and append an image element for each URL
                 imageUrls.forEach(url => {
                     const img = document.createElement('img');
                     img.src = url;
                     img.alt = `Restaurant Menu - ${menuId}`;
                     img.className = "w-full h-auto object-contain rounded-lg shadow-md";
-                    
-                    // Attach an error handler to each individual image
                     img.addEventListener('error', () => handleImageError(img));
-                    
                     menuDisplayContainer.appendChild(img);
                 });
             }
 
-            // Function to set the initial state when the page loads.
             function showInitialMenu() {
                 const initialMenuId = 'main';
                 const initialBtn = document.getElementById(initialMenuId);
@@ -142,33 +133,19 @@
 
             // --- Event Listeners ---
 
-            // Close button for the error modal.
-            closeModalBtn.addEventlistener('click', () => {
+            closeModalBtn.addEventListener('click', () => {
                 errorModal.classList.add('hidden');
             });
 
-            // Add click listeners to all menu navigation buttons.
             menuButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const menuId = button.id;
-                    // Update active button style
                     menuButtons.forEach(btn => btn.classList.remove('btn-active'));
                     button.classList.add('btn-active');
-                    // Display the selected menu
                     displayVerticalMenu(menuId);
                 });
             });
             
-            // --- Swipe Navigation Logic (Disabled for Zoom/Pan Fix) ---
-            // The horizontal swipe logic has been disabled to prevent accidental menu
-            // switching when a user is zoomed in and panning to read a menu image.
-            // Navigation should now only be done using the dedicated menu buttons.
-            console.log("Horizontal swipe navigation disabled to prevent conflict with image zoom/pan.");
-
-
-            // --- Initial Load ---
-
-            // Display the main menu when the page first loads.
             showInitialMenu();
         });
     </script>
